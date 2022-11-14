@@ -5,6 +5,8 @@
 // 23. Fac¸a uma func¸ao para retornar o n ˜ umero de elementos da pilha que possuem valor ´
 // ´ımpar
 // 24. Fac¸a uma func¸ao para retornar o n ˜ umero de elementos da pilha que possuem valor par
+// 25. Fac¸a uma func¸ao que receba uma pilha como argumento e retorne o valor armazenado ˜
+// em seu topo. A func¸ao deve remover tamb ˜ em esse elemento. 
 
 
 typedef struct NO
@@ -115,6 +117,16 @@ int qtdPar(PILHA *p){
     }
 }
 
+// Retornar o elemento do topo da pilha
+int topoPilha(PILHA *p){
+  if(pilhaVazia(p) == 0){
+    NO *novo = p->topo;
+    return novo->num;
+  } else {
+    printf("\nPilha vazia.");
+  }
+}
+
 
 int main()
 {
@@ -124,7 +136,7 @@ int main()
 
     do
     {
-        printf("\n0 - sair\n1 - empilhar\n2 - desempilhar\n3 - exibir\n4 - quantidade de num impar\n5 - quantidade de num par \n");
+        printf("\n0 - sair\n1 - empilhar\n2 - desempilhar\n3 - exibir\n4 - quantidade de num impar\n5 - quantidade de num par\n6 - Topo da pilha\n");
         scanf("%d", &op);
 
         switch (op)
@@ -142,6 +154,9 @@ int main()
         case 5: aux = qtdPar(p);
                 if(aux != -1) printf("\nQtd de pares: %d", aux);
              break; 
+        case 6: aux = topoPilha(p);
+                printf("\nTopo da Pilha: %d", aux);
+          break;
         
         default: if(op != 0) printf("\nOpcoa invalida.");
             break;
@@ -151,4 +166,3 @@ int main()
 
     return 0;
 }
-
