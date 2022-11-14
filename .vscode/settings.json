@@ -2,6 +2,7 @@
     "files.associations": {
         "exer03c": "c",
         "stdlib.h": "c",
-        "stdio.h": "c"
+        "stdio.h": "c",
+        "pilha.h": "c"
     }
 }
