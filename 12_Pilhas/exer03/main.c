@@ -1,8 +1,10 @@
-// #include "pilha.h"
-// #include "pilha.c"
-
 #include <stdio.h>
 #include <stdlib.h>
+
+
+// 23. Fac¸a uma func¸ao para retornar o n ˜ umero de elementos da pilha que possuem valor ´
+// ´ımpar
+// 24. Fac¸a uma func¸ao para retornar o n ˜ umero de elementos da pilha que possuem valor par
 
 
 typedef struct NO
@@ -15,8 +17,6 @@ typedef struct PILHA
 {
     NO *topo;
 }PILHA;
-
-
 
 void inicializarPilha(PILHA *p){
     p->topo = NULL;
@@ -79,22 +79,41 @@ int lerNUm(){
 
 // Retornar A quantidade de elementos impares de pilha
 int qtdImpar(PILHA *p){
-    int qtd = 0;
-    if (pilhaVazia(p))
+   int qtd = 0;
+
+    NO *novo = p->topo;
+    if (novo == NULL)
     {
         printf("\nPilha Vazia.");
         return -1;
     } else {
-        while(pilhaVazia(p) == 0){
-            if (pop(p) % 2 != 0)
+        while(novo != NULL){
+            if (novo->num % 2 != 0)
                 qtd++;
+            novo = novo->prox;
         }
         return qtd;
     }
 }
 
+// Retornar A quantidade de elementos pares de pilha
+int qtdPar(PILHA *p){
+    int qtd = 0;
 
-
+    NO *novo = p->topo;
+    if (novo == NULL)
+    {
+        printf("\nPilha Vazia.");
+        return -1;
+    } else {
+        while(novo != NULL){
+            if (novo->num % 2 == 0)
+                qtd++;
+            novo = novo->prox;
+        }
+        return qtd;
+    }
+}
 
 
 int main()
@@ -105,7 +124,7 @@ int main()
 
     do
     {
-        printf("\n0 - sair\n1 - empilhar\n2 - desempilhar\n3 - exibir\n4 - quantidade de num impar\n");
+        printf("\n0 - sair\n1 - empilhar\n2 - desempilhar\n3 - exibir\n4 - quantidade de num impar\n5 - quantidade de num par \n");
         scanf("%d", &op);
 
         switch (op)
@@ -119,7 +138,10 @@ int main()
             break;
         case 4: aux = qtdImpar(p);
                 if(aux != -1) printf("\nQtd de impares: %d", aux);
-             break;                                 
+             break;     
+        case 5: aux = qtdPar(p);
+                if(aux != -1) printf("\nQtd de pares: %d", aux);
+             break; 
         
         default: if(op != 0) printf("\nOpcoa invalida.");
             break;
@@ -127,10 +149,6 @@ int main()
     } while (op != 0);
     
 
-
-
-
-
-
     return 0;
 }
+
