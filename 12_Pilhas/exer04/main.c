@@ -87,10 +87,18 @@ void dec_bin(PILHA *p, int num){
   if(num == 1) push(p, 1);
   
 }
+void dec_oct(PILHA *p, int num){
+    while (num >= 8)
+    {
+        push(p, num % 8);
+        num = num / 8;
+    }
+        push(p, num % 8);
+}
 
 int lerNum(){
     int num;
-    printf("\nInforme um num.");
+    printf("\nInforme um num: ");
     scanf("%d", &num);
     return num;
 }
@@ -109,7 +117,7 @@ int main(void) {
     switch(op){
       case 1: dec_bin(p, lerNum());
         break;
-      case 2:
+      case 2: dec_oct(p, lerNum());
         break;
       case 3:
         break;
