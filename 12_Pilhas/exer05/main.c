@@ -2,7 +2,7 @@
 #include <stdlib.h>
 
 typedef struct NO{
-  int num;
+  char fun;
   struct NO *prox;
 }NO;
 
@@ -34,13 +34,13 @@ int pilhaVazia(PILHA *p){
   else return 0;
 }
 
-void push(PILHA *p, int num){
+void push(PILHA *p, char equ){
   NO *novo = (NO*) malloc(sizeof(NO));
   if(novo == NULL){
       printf("\nPilha vazia.");
     return;
   } else {
-    novo->num = num;
+    novo->fun = equ;
     novo->prox = p->topo;
     p->topo = novo;
   }
@@ -53,7 +53,7 @@ int pop(PILHA *p){
       printf("\nPilha vazia.");
       return -1;
     } else {
-      aux = p->topo->num;
+      aux = p->topo->fun;
       apagar = p->topo;
       p->topo = p->topo->prox;
       free(apagar);
@@ -67,41 +67,49 @@ void exibir(PILHA *p){
   } else {
     printf("\n");
     while(novo != NULL){
-      printf("%d ", novo->num);
+      printf("%c ", novo->fun);
       novo = novo->prox;
     }
     printf("\n");
   }
 }
-
-void dec_bin(PILHA *p, int num){
- 
-  while (num != 1){
-    if(num % 2 == 0){
-      push(p, 0);
-    } else {
-      push(p, 1);
-    }
-    num = num / 2;
-  }
-  if(num == 1) push(p, 1);
-  
-}
-void dec_oct(PILHA *p, int num){
-    while (num >= 8)
+int verificarEquacao(PILHA *p){
+  NO *novo2, *novo = p->topo;
+  char aux;
+  int controle = 0, contA = 0, contF = 0;
+  if (pilhaVazia(p))
+  {
+    printf("\nPilha Vazia.");
+    return;
+  } else {
+    while (novo != NULL)
     {
-        push(p, num % 8);
-        num = num / 8;
+      
+       if (novo->fun == '(')
+       {
+          controle = 0;
+          novo2 = novo->prox;
+          // Verificar se ha um abre parenteses
+          while (novo2 != NULL)
+          {
+             if (novo2->fun == ')')
+                controle = 1;
+             
+            novo2 = novo2->prox;
+          }
+       }
+       novo = novo->prox;
     }
-        push(p, num % 8);
+  }
+
+  return controle;
 }
 
-
-
-int lerNum(){
-    int num;
+char lerNum(){
+    char num;
     printf("\nInforme um num: ");
-    scanf("%d", &num);
+    scanf("%c", &num);
+    getchar();
     return num;
 }
 
@@ -114,18 +122,24 @@ int main(void) {
 
 
   do{
-    printf("\n0 - sair\n1 - Decimal -> Binario\n2 - Decimal -> octal\n3 - Decimal -> hexadecimal\n4 - exibri\n");
+    printf("\n0 - sair\n1 - push\n2 - verificar equacao\n3 - exibri\n4 - reinicializarP\n");
     scanf("%d", &op);
+    getchar();
     switch(op){
-      case 1: dec_bin(p, lerNum());
+      case 1:  push(p, lerNum());
         break;
-      case 2: dec_oct(p, lerNum());
+      case 2:  if (verificarEquacao(p))
+                {
+                  printf("\nEquacao correta.");
+                }else{
+                  printf("\nEquacao incorreta.");
+                }
         break;
-      case 3:
+      case 3: exibir(p); 
         break;
-      case 4: exibir(p); 
-              reinicializarPilha(p);
+      case 4: reinicializarPilha(p);
         break;
+
       default: if (op != 0) printf("\nOpcao invalida.");
         break;
     }  
